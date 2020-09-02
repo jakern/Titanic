@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TITANIC</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"></link>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  </head>
+  <body>
+    <div id="cover">
+      <label for="">Room: </label>
+      <input type="text" name="room" id="room" placeholder="room" value=""></input>
+      <label for="">Username: </label>
+      <input type="text" name="name" id="name" placeholder="Gabe" value=""></input>
+      <button type="button" name="join" onclick="joinRoom()">Join Room</button>
+      <button type="button" name="audioTest" onclick="ctlBuzz.play()">Test Sound</button>
+    </div>
+
+    <div id="game">
+          <div id="cup"></div>
+          <div>
+            <h3>Users in Room:</h3>
+            <ul id="userlist"><li></li>
+            </ul>
+          </div>
+
+          <div id=counter>0</div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='main.js') }}"
+    ></script>
+    <audio id="buzzer">
+      <source src="{{ url_for('static', filename='okhh.mp3') }}" type="audio/wav" preload="auto">
+    </audio>
+  </body>
+</html>

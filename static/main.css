@@ -1,0 +1,59 @@
+body {
+  background-image: url("/static/bg.png");
+  display: grid;
+  color: white;
+  /* grid-template-columns: minmax(150px, 85%) 1fr; */
+  padding: 0;
+  margin: 0;
+}
+
+#cover {
+  width: 100%;
+  height: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 10rem; /* Location of the box */
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(10px);
+  /* height: 100vh; */
+  font-size: 2rem;
+  text-align: center;
+}
+
+#cover input {
+  border-radius: 1em;
+  height: 2em;
+  border: white solid 1px;
+  padding-left: 1em;
+  margin: 2rem auto;
+  justify-content: center;
+  display: block;
+}
+#cover button {
+  border-radius: 2em;
+  /* height: 2em; */
+  border: white solid 1px;
+  padding: .5rem 1rem;
+  background-color: white;
+}
+
+#cup {
+  display: none;
+  margin:2em;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: #ffd04d87;
+  font-size: 2rem;
+  text-align: center;
+  /* justify-content: center; */
+  /* min-height: 50vw; */
+  height: 20vh;
+  width: 30vw;
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}
+
+#game {
+  margin-left: 3rem;
+}
