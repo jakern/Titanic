@@ -15,11 +15,16 @@ body {
   padding-top: 10rem; /* Location of the box */
   left: 0;
   top: 0;
-  backdrop-filter: blur(10px);
   /* height: 100vh; */
   font-size: 2rem;
   text-align: center;
 }
+@@supports backdrop-filter: blur(10px){
+  #cover {
+    backdrop-filter: blur(10px);
+  }
+}
+
 
 #cover input {
   border-radius: 1em;

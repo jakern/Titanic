@@ -1,6 +1,8 @@
 window.onload = (event) => {
   ctlBuzz = document.getElementById("buzzer");
   ctlBuzz.load();
+  ctlEnd = document.getElementById("end-noise");
+  ctlEnd.load();
 };
 
 var myID, roomVal, nameVal, ctlBuzz;
@@ -35,19 +37,9 @@ socket.on("new_connect", msg => {
   myID = msg['id'];
   console.log("My ID is " + myID);
 });
-//
-// socket.on('update', msg => {
-//   console.log("got update", msg);
-//   if ( msg['id'] != myID ) {
-//     document.querySelector("#counter").innerHTML = msg['fill']
-//   }
-// });
 
 socket.on("pour", msg => {
-  // console.log("got pour", msg);
-  if ( msg['room'] == roomVal ) {
     document.querySelector("#counter").innerHTML = msg['fill']
-  }
 });
 
 socket.on("beep", msg => {
@@ -78,8 +70,13 @@ socket.on("leave_room", msg => {
   removeUser(msg['id'])
 });
 
-socket.on("game_over", msg => {
-  alert("GAME OVER: " + msg["name"])
+socket.on("game_over", loser => {
+  // finish pouring
+  const event = new Event('mouseup');
+  button.dispatchEvent(event);
+
+  ctlEnd.play();
+  alert("GAME OVER: " + loser);
 });
 
 function createID() {
@@ -93,7 +90,7 @@ function createID() {
 }
 
 function pourStart(e) {
-  if(pouring==-1)  //Prevent multimple loops!
+  if(pouring == -1)  //Prevent multimple loops!
     pouring = setInterval(pour, 50 /*execute every 100ms*/);
 }
 

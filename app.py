@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
 socketio = SocketIO(app)
 
-rooms = {}
+rooms = {} # "name": {"fill:0,"game_over": False, "users":[{"id":12345, "name":"jake"},]}
 threads = list()
 
 @app.route('/')
@@ -31,14 +31,17 @@ def on_join(data):
     global rooms
     username = data['name']
     room = data['room']
+
+    # Init room
     if room not in rooms:
         print(f'new room: {room}')
         rooms[room] = {}
         rooms[room]['fill'] = 0
         rooms[room]['users'] = []
+        rooms[room]['game_over'] = False
 
     join_room(room)
-    rooms[room]["users"].append({"user":username,"id":request.sid})
+    rooms[room]["users"].append({"name":username,"id":request.sid})
     print(f'{username} joined {room} of rooms {flask_rooms(request.sid)} ')
     emit('join_room', {'user': username, 'id': request.sid, 'room': room}, json=True, room=room)
 
@@ -49,6 +52,8 @@ def on_leave(data):
     leave_room(room)
     print(f'{username} left {room} of rooms {flask_rooms(request.sid)} ')
     emit('leave_room', {'user': username, 'id': request.sid, 'room': room}, json=True, room=room)
+    if (request.sid):
+        pass
 
 @socketio.on('here')
 def on_here(data):
@@ -62,11 +67,14 @@ def handle_pour_event(data, methods=['GET', 'POST']):
     global rooms
     print('pouring: ' + str(data))
 
-    rooms[data['room']]['fill']+= random.randint(1,5)
-    if rooms[data['room']]['fill'] >= 150:
-        socketio.emit('game_over', data, room=data['room'])
+    if rooms[data['room']]['game_over'] == False:
+        rooms[data['room']]['fill'] += random.randint(1,5)
+        socketio.emit('pour', { "fill": rooms[data['room']]['fill'] }, room=data['room'])
 
-    socketio.emit('pour', { "room": data['room'],"fill":rooms[data['room']]['fill'] }, room=data['room'])
+        if rooms[data['room']]['fill'] >= 150:
+            loser = [x['name'] for x in rooms[data['room']]['users'] if x['id'] == request.sid]
+            socketio.emit('game_over', loser, room=data['room'])
+            rooms[data['room']]['game_over'] = True
 
 def beep(room, time):
     sleep(time)
