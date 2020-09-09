@@ -76,6 +76,12 @@ socket.on("game_over", loser => {
   const event = new Event('mouseup');
   button.dispatchEvent(event);
 
+  var l = document.getElementById("liquor");
+  var s = document.getElementById("shotglass");
+  l.style.height = 0;
+  l.style.top = 0;
+  s.style.top = '250px';
+
   ctlEnd.play();
   alert("GAME OVER: " + loser);
 });
