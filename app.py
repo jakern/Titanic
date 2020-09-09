@@ -40,6 +40,8 @@ def on_join(data):
         rooms[room]['users'] = []
         rooms[room]['game_over'] = False
 
+        startTimer(room, 180)
+
     join_room(room)
     rooms[room]["users"].append({"name":username,"id":request.sid})
     print(f'{username} joined {room} of rooms {flask_rooms(request.sid)} ')
@@ -77,11 +79,13 @@ def handle_pour_event(data, methods=['GET', 'POST']):
             rooms[data['room']]['game_over'] = True
 
 def beep(room, time):
-    sleep(time)
-    socketio.emit('beep', room=room)
+    global rooms
+    while not rooms[room]['game_over']:
+        sleep(time)
+        socketio.emit('beep', room=room)
 
 @app.route('/start/<room>/<int:time>')
-def start(room, time):
+def startTimer(room, time):
     t = Thread(target=beep, args=(room, time))
     threads.append(t)
     t.start()
