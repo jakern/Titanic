@@ -71,7 +71,7 @@ def handle_pour_event(data, methods=['GET', 'POST']):
         rooms[data['room']]['fill'] += random.randint(1,5)
         socketio.emit('pour', { "fill": rooms[data['room']]['fill'] }, room=data['room'])
 
-        if rooms[data['room']]['fill'] >= 150:
+        if rooms[data['room']]['fill'] >= 100:
             loser = [x['name'] for x in rooms[data['room']]['users'] if x['id'] == request.sid]
             socketio.emit('game_over', loser, room=data['room'])
             rooms[data['room']]['game_over'] = True

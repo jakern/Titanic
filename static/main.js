@@ -39,7 +39,8 @@ socket.on("new_connect", msg => {
 });
 
 socket.on("pour", msg => {
-    document.querySelector("#counter").innerHTML = msg['fill']
+    document.querySelector("#counter").innerHTML = msg['fill'];
+    setPour(msg['fill']);
 });
 
 socket.on("beep", msg => {
@@ -162,4 +163,10 @@ function addUser(user, id) {
 function removeUser(id) {
   var ul = document.getElementById("userlist");
   ul.querySelector("li[data-id='"+ id + "']").remove();
+}
+
+function setPour(amt) {
+  var l = document.getElementById("liquor")
+  l.style.height = amt + "%"
+  l.style.top = (100-amt) + "%"
 }
