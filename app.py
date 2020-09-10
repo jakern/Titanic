@@ -20,11 +20,16 @@ def handle_reset_event():
     global rooms
     print('reseting')
     rooms = {}
+    return render_template('session.html')
 
 @socketio.on('new_connect')
 def new_connect():
     print(f'new client {request.sid}')
     emit('new_connect', {'id': request.sid}, json=True, room=request.sid)
+    
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
 
 @socketio.on('join_room')
 def on_join(data):

@@ -46,15 +46,13 @@ body {
 
 #cup {
   display: none;
-  margin:2em;
+  margin: 3em auto;
   padding: 0.5rem;
   border-radius: 10px;
   border: 1px solid white;
   background: #ffd04d87;
   font-size: 2rem;
   text-align: center;
-  /* justify-content: center; */
-  /* min-height: 50vw; */
   height: 400px;
   width: 300px;
   clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
@@ -78,6 +76,6 @@ body {
 }
 
 #liquor {
-  background-color: white;
+  background-color: rgba(200, 200, 200, 0.25);
   position: relative;
 }

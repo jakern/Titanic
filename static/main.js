@@ -173,6 +173,8 @@ function removeUser(id) {
 
 function setPour(amt) {
   var l = document.getElementById("liquor")
+  var s = document.getElementById("shotglass")
   l.style.height = amt + "%"
   l.style.top = (100-amt) + "%"
+  s.style.top = (amt / 25) + "%"
 }
